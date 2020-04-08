@@ -41,7 +41,7 @@
         <img th:src="@{/images/logo.jpg}" class="img-responsive center-block" width="250" height="250" alt="Logo"/>
         <h1>Feedpons - Client - Homepage</h1>
         <div class="panel panel-primary">
-            <div class="panel-heading">
+            <div class="panel-heading"> 
                 <span th:utext="${userName}"></span>
             </div>
         </div>
@@ -57,11 +57,14 @@
     // locate you.
     var map, infoWindow;
     function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 6
+        var locationRio = {lat: -22.915, lng: -43.197};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 16,
+            center: locationRio,
+            gestureHandling: 'cooperative'
         });
         infoWindow = new google.maps.InfoWindow;
+
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
