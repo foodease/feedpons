@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="persistenceUnit">
+        <class>com.foodease.feedpons.client.login.model.CharacterSetsEntity</class>
+        <class>com.foodease.feedpons.client.login.model.CheckConstraintsEntity</class>
+        <class>com.foodease.feedpons.client.login.model.CollationsEntity</class>
+        <class>com.foodease.feedpons.client.login.model.CollationCharacterSetApplicabilityEntity</class>
+        <class>com.foodease.feedpons.client.login.model.ColumnsEntity</class>
+        <class>com.foodease.feedpons.client.login.model.ColumnPrivilegesEntity</class>
+        <class>com.foodease.feedpons.client.login.model.ColumnStatisticsEntity</class>
+        <class>com.foodease.feedpons.client.login.model.EnginesEntity</class>
+        <class>com.foodease.feedpons.client.login.model.EventsEntity</class>
+        <class>com.foodease.feedpons.client.login.model.FilesEntity</class>
+        <class>com.foodease.feedpons.client.login.model.InnodbBufferPageEntity</class>
+        <class>com.foodease.feedpons.client.login.model.HibernateSequenceEntity</class>
+        <class>com.foodease.feedpons.client.login.model.RolesEntity</class>
+        <class>com.foodease.feedpons.client.login.model.UserRoleEntity</class>
+        <class>com.foodease.feedpons.client.login.model.UsersEntity</class>
+        <class>com.foodease.feedpons.client.login.model.InnodbBufferPageLruEntity</class>
+    </persistence-unit>
+</persistence>
