@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Donor Home Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js">
+    </script>
+</head>
+
+<body class="container">
+
+
+<div class="container">
+    <br/>
+    <form th:action="@{/logout}" method="get">
+        <button class="btn btn-md btn-danger" name="registration"
+                type="Submit">Logout
+        </button>
+    </form>
+
+    <div class="panel-group" style="margin-top:40px">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${userName}"></span>
+            </div>
+            <div class="panel-body"></div>
+
+
+            <select>
+                <option>Select Restaurant:</option>
+                <option  th:each="rest : ${restaurant}"
+                         th:text="${rest.firstName + rest.lastName.toLowerCase()}">
+                </option>
+            </select>
+
+
+            <br/>
+            <br/>
+
+                <!--QR CODE Scanner-->
+                <div class="container">
+                    <p>Scan QR Code:</p>
+                    <form action="#" th:action="@{/donor/home}" method="post">
+                        <input name="qr" id="qr" type=text size=16 placeholder="Tracking Code" class=qrcode-text><label class=qrcode-text-btn><input
+                        type=file accept="image/*" capture=environment onchange="openQRCamera(this);" tabindex=-1></label>
+<!--                    <form action="" method="get">-->
+<!--                        <button type="submit">Submit</button>-->
+<!--                    </form>-->
+                        <button type="submit">Submit Code</button>
+                    </form>
+
+                    <br/>
+                </div>
+
+            <p class="admin-message-text text-left" th:utext="${menu}"></p>
+            <button>Donate the meal</button>
+
+            <div id="btnOne"><input type="button" onClick="addBtn();" value="Pay" /></div>
+            <div id="btnHolder">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--paypal-->
+<div class="container pay">
+    <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+    <script>paypal.Buttons().render('.pay');</script>
+</div>
+
+<br/>
+
+
+
+<div class="footer">
+    <p>Copyright &copy; 2020 | Feedpons </p>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script>
+    function openQRCamera(node) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            node.value = "";
+            qrcode.callback = function (res) {
+                if (res instanceof Error) {
+                    alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+                } else {
+                    node.parentNode.previousElementSibling.value = res;
+                }
+            };
+            qrcode.decode(reader.result);
+        };
+        reader.readAsDataURL(node.files[0]);
+    }
+</script>
+
+<script>
+    function addBtn(){
+        document.getElementById('btnHolder').innerHTML = '<input type="button" onClick="removeBtn();" value="click" />';
+    }
+
+    function removeBtn(){
+        document.getElementById('btnHolder').innerHTML = '';
+    }
+</script>
+
+</body>
+</html>

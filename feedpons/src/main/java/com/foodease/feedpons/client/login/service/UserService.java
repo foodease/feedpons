@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 
 @Service
@@ -34,6 +35,12 @@ public class UserService {
 
     public User findUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
+    }
+
+
+    //method to find user by role
+    public List<User> findUsersByRole(int role_id) {
+        return userRepository.findByRolesId(role_id);
     }
 
     public User saveUser(User user, String role) {
