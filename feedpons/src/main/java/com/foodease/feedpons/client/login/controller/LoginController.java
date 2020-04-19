@@ -1,7 +1,13 @@
 package com.foodease.feedpons.client.login.controller;
 
+import com.foodease.feedpons.client.login.model.ActiveMeal;
+import com.foodease.feedpons.client.login.model.LiveMeal;
+import com.foodease.feedpons.client.login.model.Meal;
 import com.foodease.feedpons.client.login.model.User;
 import com.foodease.feedpons.client.login.repository.RoleRepository;
+import com.foodease.feedpons.client.login.service.ActiveMealService;
+import com.foodease.feedpons.client.login.service.LiveMealService;
+import com.foodease.feedpons.client.login.service.MealService;
 import com.foodease.feedpons.client.login.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 
@@ -26,6 +35,15 @@ public class LoginController {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private MealService mealService;
+
+    @Autowired
+    private ActiveMealService activeMealService;
+
+    @Autowired
+    private LiveMealService liveMealService;
 
 
     @GetMapping(value = {"/", "/login"})
@@ -157,8 +175,10 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
+        List<LiveMeal> liveMealsList = liveMealService.findAll();
         modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
         modelAndView.addObject("tokenCount", "Tokens Available: 30");
+        modelAndView.addObject("liveMealsList", liveMealsList);
         modelAndView.setViewName("/client/client_home");
         return modelAndView;
     }
@@ -166,12 +186,17 @@ public class LoginController {
     @GetMapping(value = "/donor/home")
     public ModelAndView donorHome() {
         ModelAndView modelAndView = new ModelAndView();
+        DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(dtf.format(now));
+        String time = dtf.format(now);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         List<User> restaurant = userService.findUsersByRole(3);
         System.out.println("🔥🔥🔥🔥" + restaurant);
         modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("restaurant", restaurant);
+        modelAndView.addObject("time", time);
         modelAndView.setViewName("/donor/donor_home");
         return modelAndView;
     }
@@ -179,22 +204,20 @@ public class LoginController {
     @PostMapping(value="/donor/home")
     public ModelAndView getVal(@RequestParam("qr") String qr){
         String menu = "";
-        if (qr.equals("457983476897438")){
-            menu = "Double Whooper";
-        } else if (qr.equals("60360348605910")){
-            menu = "Footlong Sub";
-        } else{
-            menu = "Invalid Code";
-        }
+        Meal meal = mealService.findByBarcode(qr);
+        System.out.println("🔥🔥🔥🔥" + meal.getItemName());
+        menu = meal.getItemName();
+        String price = meal.getItemPrice();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         ModelAndView modelAndView = new ModelAndView();
+        ActiveMeal meal1 = new ActiveMeal();
+        activeMealService.saveActiveMeal(meal1, menu);
         List<User> restaurant = userService.findUsersByRole(3);
         modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("restaurant", restaurant);
-        modelAndView.addObject("menu", "Meal: "+menu);
+        modelAndView.addObject("menu", "Meal: "+menu + " Price: $" + price);
         modelAndView.setViewName("/donor/donor_home");
-        System.out.println(menu);
         return modelAndView;
     }
 
@@ -203,8 +226,32 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
+        List<ActiveMeal> activeMeals = activeMealService.findAll();
+        List<LiveMeal> liveMealsList = liveMealService.findAll();
         modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
         modelAndView.addObject("adminMessage", "Content Available Only for Restaurants");
+        modelAndView.addObject("activeMeals", activeMeals);
+        modelAndView.addObject("liveMealsList", liveMealsList);
+        modelAndView.setViewName("/restaurant/restaurant_home");
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/restaurant/home")
+    public ModelAndView postRestaurantHome(@RequestParam("selectedActive") String selectedActive ) {
+        System.out.println("====>" + selectedActive);
+        activeMealService.deleteActiveMeal(selectedActive);
+        LiveMeal liveMeals = new LiveMeal();
+        liveMealService.saveLiveMeal(liveMeals, selectedActive);
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        List<ActiveMeal> activeMeals = activeMealService.findAll();
+        List<LiveMeal> liveMealsList = liveMealService.findAll();
+        modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
+        modelAndView.addObject("adminMessage", "Content Available Only for Restaurants");
+        modelAndView.addObject("activeMeals", activeMeals);
+        modelAndView.addObject("liveMeals", liveMeals);
+        modelAndView.addObject("liveMealsList", liveMealsList);
         modelAndView.setViewName("/restaurant/restaurant_home");
         return modelAndView;
     }

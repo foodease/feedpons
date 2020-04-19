@@ -48,6 +48,22 @@
     </div>
 
 
+    <h4>Current meals available:</h4>
+<!--    <ul>-->
+<!--        <li th:each="liveMeals : ${liveMealsList}" th:text="${liveMeals.itemName}"></li>-->
+<!--    </ul>-->
+    <form action="#" th:action="@{/restaurant/home}" method="post">
+        <th:block th:each="liveMeals : ${liveMealsList}">
+            <label for="pickedFood"></label><input type="checkbox" name="pickedFood" id="pickedFood" th:value="${liveMeals.itemName}">
+            <label th:text="${liveMeals.itemName}"></label>
+            <br/>
+            <hr/>
+        </th:block>
+<!--        <input type="submit" name="submitPickedFood">-->
+    </form>
+
+
+
 </div>
 
 <!--google maps api-->

@@ -1,0 +1,14 @@
+package com.foodease.feedpons.client.login.repository;
+
+import com.foodease.feedpons.client.login.model.ActiveMeal;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ActiveMealRepository extends JpaRepository<ActiveMeal, String> {
+    List<ActiveMeal> findAll();
+
+    void deleteByItemName(String s);
+}

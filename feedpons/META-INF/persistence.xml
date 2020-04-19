@@ -18,5 +18,12 @@
         <class>com.foodease.feedpons.client.login.model.UserRoleEntity</class>
         <class>com.foodease.feedpons.client.login.model.UsersEntity</class>
         <class>com.foodease.feedpons.client.login.model.InnodbBufferPageLruEntity</class>
+        <class>com.foodease.feedpons.client.login.model.MealRepoEntity</class>
+        <class>com.foodease.feedpons.client.login.model.ActiveMealEntity</class>
+        <class>com.foodease.feedpons.client.login.model.LiveMealEntity</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:mysql://127.0.0.1:3306/client"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+        </properties>
     </persistence-unit>
 </persistence>
