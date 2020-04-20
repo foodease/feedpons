@@ -11,4 +11,6 @@ public interface LiveMealRepository extends JpaRepository<LiveMeal, String> {
 
     List<LiveMeal> findAll();
 
+    LiveMeal findByItemName(String itemName);
+
 }

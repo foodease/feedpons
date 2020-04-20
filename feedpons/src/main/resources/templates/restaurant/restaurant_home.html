@@ -72,7 +72,7 @@
                     <br/>
                     <hr/>
 
-                    <input type="submit" name="submitSelectedActive">
+                    <input class="btn btn-primary" type="submit" name="submitSelectedActive">
                 </form>
 
 
@@ -84,7 +84,10 @@
             <h4>Live Order:</h4>
             <ul>
                 <li th:each="liveMeals : ${liveMealsList}"
-                    th:text="${liveMeals.itemName} + ' | Type: ' + ${liveMeals.pickupType} + ' | Status: ' + ${liveMeals.status}">
+                    th:text="${liveMeals.itemName} +
+                    '| Type: ' + ${liveMeals.pickupType} +
+                    '| Status: ' + ${liveMeals.status}"
+                    class="p-3 mb-2 bg-info text-white ">
                 </li>
             </ul>
 

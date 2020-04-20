@@ -22,7 +22,6 @@ public class LiveMealService {
         liveMeal.setPickupType(pickupType);
         liveMeal.setStatus(status);
         return liveMealRepository.save(liveMeal);
-
     }
 
     public List<LiveMeal> findAll(){
@@ -30,8 +29,12 @@ public class LiveMealService {
     }
 
 
-//    public LiveMeal setStatus(String food, String status){
-//        liveMealRepository.;
-//    }
+    public LiveMeal findByItemName(String itemName){
+        return liveMealRepository.findByItemName(itemName);
+    }
 
+
+    public void saveLiveMeal(LiveMeal liveMeal) {
+        liveMealRepository.save(liveMeal);
+    }
 }

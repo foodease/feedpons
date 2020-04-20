@@ -189,6 +189,10 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         List<LiveMeal> liveMealsList = liveMealService.findAll();
+        LiveMeal liveMeal = liveMealService.findByItemName(pickedFood);
+        liveMeal.setStatus("Pending Pick Up");
+        System.out.println("🔥🔥🔥🔥" + liveMeal);
+        liveMealService.saveLiveMeal(liveMeal);
         modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
         modelAndView.addObject("tokenCount", "Tokens Available: 30");
         modelAndView.addObject("liveMealsList", liveMealsList);
