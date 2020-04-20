@@ -30,7 +30,6 @@
 
             </div>
             <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
-            <h4>Order Queue:</h4>
 
 
 <!--        <ul>-->
@@ -46,45 +45,47 @@
 <!--                     <input type="submit" name="selectedActive" />-->
 <!--            </form>-->
 
-            <form action="#" th:action="@{/restaurant/home}" method="post">
-                <th:block th:each="activeMeal : ${activeMeals}">
-                    <label for="selectedActive"></label><input type="checkbox" name="selectedActive" id="selectedActive" th:value="${activeMeal.itemName}">
-                    <label th:text="${activeMeal.itemName}"></label>
+
+                <h4>Order Queue:</h4>
+                <form action="#" th:action="@{/restaurant/home}" method="post">
+                    <th:block th:each="activeMeal : ${activeMeals} ">
+                        <label for="selectedActive">
+                            <input type="checkbox" name="selectedActive" id="selectedActive"
+                                   th:value="${activeMeal.itemName}"
+                                   th:text="${activeMeal.itemName}"/>
+                        </label>
+                        <hr/>
+                    </th:block>
+
+                    <input type="radio" id="dinein" name="pickupType" value="Dine-In" required>
+                    <label for="dinein">Dine In</label><br>
+                    <input type="radio" id="pickup" name="pickupType" value="Pickup" required>
+                    <label for="pickUp">Pick Up</label><br>
+                    <input type="radio" id="delivery" name="pickupType" value="Delivery" required>
+                    <label for="delivery">Delivery</label>
                     <br/>
                     <hr/>
-                </th:block>
-                <input type="submit" name="submitSelectedActive">
-            </form>
 
-<!--            <label>-->
-<!--                <select>-->
-<!--                    <option>Choose the meal</option>-->
-<!--                    <option th:each="activeMeal : ${activeMeals}" th:text="${activeMeal.itemName}" ></option>-->
-<!--                </select>-->
-<!--            </label>-->
+
+                    <label for="livetime">Food Go Live at:</label>
+                    <input type="datetime-local" id="livetime" name="livetime">
+                    <br/>
+                    <hr/>
+
+                    <input type="submit" name="submitSelectedActive">
+                </form>
+
+
+            <br/>
             <br/>
 
-
-            <label for="livetime">Food Go Live at:</label>
-            <input type="datetime-local" id="livetime" name="livetime">
-            <br/>
-
-            <input type="radio" id="dinein" name="pickType" value="dinein">
-            <label for="dinein">Dine In</label><br>
-            <input type="radio" id="pickup" name="pickType" value="pickup">
-            <label for="pickUp">Pick Up</label><br>
-            <input type="radio" id="delivery" name="pickType" value="delivery">
-            <label for="delivery">Delivery</label>
-            <br/>
-
-            <form action="#" th:action="@{/restaurant/home}" method="post">
-                <button type="submit">Set</button>
-            </form>
 
 
             <h4>Live Order:</h4>
             <ul>
-                <li th:each="liveMeals : ${liveMealsList}" th:text="${liveMeals.itemName}"></li>
+                <li th:each="liveMeals : ${liveMealsList}"
+                    th:text="${liveMeals.itemName} + ' | Type: ' + ${liveMeals.pickupType} + ' | Status: ' + ${liveMeals.status}">
+                </li>
             </ul>
 
 

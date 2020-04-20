@@ -17,8 +17,10 @@ public class LiveMealService {
         this.liveMealRepository = liveMealRepository;
     }
 
-    public LiveMeal saveLiveMeal(LiveMeal liveMeal, String meal){
+    public LiveMeal saveLiveMeal(LiveMeal liveMeal, String meal, String pickupType, String status){
         liveMeal.setItemName(meal);
+        liveMeal.setPickupType(pickupType);
+        liveMeal.setStatus(status);
         return liveMealRepository.save(liveMeal);
 
     }
@@ -26,5 +28,10 @@ public class LiveMealService {
     public List<LiveMeal> findAll(){
         return liveMealRepository.findAll();
     }
+
+
+//    public LiveMeal setStatus(String food, String status){
+//        liveMealRepository.;
+//    }
 
 }

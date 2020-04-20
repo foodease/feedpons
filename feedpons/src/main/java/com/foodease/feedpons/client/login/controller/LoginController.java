@@ -183,6 +183,20 @@ public class LoginController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/client/home")
+    public ModelAndView postclientHome(@RequestParam("pickedFood") String pickedFood) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+        List<LiveMeal> liveMealsList = liveMealService.findAll();
+        modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
+        modelAndView.addObject("tokenCount", "Tokens Available: 30");
+        modelAndView.addObject("liveMealsList", liveMealsList);
+        modelAndView.setViewName("/client/client_home");
+        return modelAndView;
+    }
+
+
     @GetMapping(value = "/donor/home")
     public ModelAndView donorHome() {
         ModelAndView modelAndView = new ModelAndView();
@@ -237,18 +251,17 @@ public class LoginController {
     }
 
     @PostMapping(value = "/restaurant/home")
-    public ModelAndView postRestaurantHome(@RequestParam("selectedActive") String selectedActive ) {
-        System.out.println("====>" + selectedActive);
+    public ModelAndView postRestaurantHome(@RequestParam("selectedActive") String selectedActive, @RequestParam("pickupType") String pickupType ) {
         activeMealService.deleteActiveMeal(selectedActive);
         LiveMeal liveMeals = new LiveMeal();
-        liveMealService.saveLiveMeal(liveMeals, selectedActive);
+        liveMealService.saveLiveMeal(liveMeals, selectedActive, pickupType, "live");
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         List<ActiveMeal> activeMeals = activeMealService.findAll();
         List<LiveMeal> liveMealsList = liveMealService.findAll();
         modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Restaurants");
+        modelAndView.addObject("adminMessage", "");
         modelAndView.addObject("activeMeals", activeMeals);
         modelAndView.addObject("liveMeals", liveMeals);
         modelAndView.addObject("liveMealsList", liveMealsList);

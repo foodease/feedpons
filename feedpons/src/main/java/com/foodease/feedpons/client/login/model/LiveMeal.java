@@ -22,4 +22,10 @@ public class LiveMeal {
     @Column(name = "item_name")
     private String itemName;
 
+    @Column(name = "pickup_type")
+    private String pickupType;
+
+    @Column(name = "status")
+    private String status;
+
 }

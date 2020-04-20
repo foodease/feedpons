@@ -30,7 +30,7 @@
 
     <br/>
     <form th:action="@{/logout}" method="get">
-        <button class="btn btn-md btn-danger" name="registration"
+        <button class="btn btn-md btn-danger " name="registration"
                 type="Submit">Logout
         </button>
     </form>
@@ -40,27 +40,38 @@
             <div class="panel-heading">
                 <span th:utext="${userName}"></span>
             </div>
-            <div class="panel-body">
-
-            </div>
-            <p class="admin-message-text text-center" th:utext="${tokenCount}"></p>
         </div>
     </div>
 
 
-    <h4>Current meals available:</h4>
+
 <!--    <ul>-->
 <!--        <li th:each="liveMeals : ${liveMealsList}" th:text="${liveMeals.itemName}"></li>-->
 <!--    </ul>-->
-    <form action="#" th:action="@{/restaurant/home}" method="post">
-        <th:block th:each="liveMeals : ${liveMealsList}">
-            <label for="pickedFood"></label><input type="checkbox" name="pickedFood" id="pickedFood" th:value="${liveMeals.itemName}">
-            <label th:text="${liveMeals.itemName}"></label>
-            <br/>
-            <hr/>
-        </th:block>
-<!--        <input type="submit" name="submitPickedFood">-->
-    </form>
+
+
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <p class="admin-message-text text-right" th:utext="${tokenCount}"></p>
+                <h4 class="admin-message-text text-left">Current meals available:</h4>
+
+                <form action="#" th:action="@{/client/home}" method="post" class="admin-message-text text-left">
+                    <th:block th:each="liveMeals : ${liveMealsList}">
+                        <input type="checkbox" name="pickedFood" id="pickedFood" th:value="${liveMeals.itemName}">
+                        <label for="pickedFood"
+                               th:text="${liveMeals.itemName} + ' | Type: ' + ${liveMeals.pickupType} "></label>
+                        <br/>
+                        <hr/>
+                    </th:block>
+                    <input class="btn btn-primary" type="submit" name="submitPickedFood" value="Order">
+                    <br/>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
 
 
 
