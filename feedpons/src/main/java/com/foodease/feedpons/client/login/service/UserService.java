@@ -52,9 +52,11 @@ public class UserService {
     }
 
 
+    public void updateUser(User user, String fname, String lname){
+        user.setFirstName(fname);
+        user.setLastName(lname);
 
-
-
+    }
 
 
 }

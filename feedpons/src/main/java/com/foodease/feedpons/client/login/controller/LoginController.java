@@ -176,7 +176,7 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByUserName(auth.getName());
         List<LiveMeal> liveMealsList = liveMealService.findAll();
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
+        modelAndView.addObject("userName", "Welcome " +  user.getFirstName() + " " + user.getLastName());
         modelAndView.addObject("tokenCount", "Tokens Available: 30");
         modelAndView.addObject("liveMealsList", liveMealsList);
         modelAndView.setViewName("/client/client_home");
@@ -193,7 +193,7 @@ public class LoginController {
         liveMeal.setStatus("Pending Pick Up");
         System.out.println("🔥🔥🔥🔥" + liveMeal);
         liveMealService.saveLiveMeal(liveMeal);
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
+        modelAndView.addObject("userName", "Welcome " +  user.getFirstName() + " " + user.getLastName());
         modelAndView.addObject("tokenCount", "Tokens Available: 30");
         modelAndView.addObject("liveMealsList", liveMealsList);
         modelAndView.setViewName("/client/client_home");
@@ -212,7 +212,7 @@ public class LoginController {
         User user = userService.findUserByUserName(auth.getName());
         List<User> restaurant = userService.findUsersByRole(3);
         System.out.println("🔥🔥🔥🔥" + restaurant);
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("userName", user.getFirstName() + " " + user.getLastName());
         modelAndView.addObject("restaurant", restaurant);
         modelAndView.addObject("time", time);
         modelAndView.setViewName("/donor/donor_home");
@@ -232,7 +232,7 @@ public class LoginController {
         ActiveMeal meal1 = new ActiveMeal();
         activeMealService.saveActiveMeal(meal1, menu);
         List<User> restaurant = userService.findUsersByRole(3);
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("restaurant", restaurant);
         modelAndView.addObject("menu", "Meal: "+menu + " Price: $" + price);
         modelAndView.setViewName("/donor/donor_home");
@@ -246,8 +246,8 @@ public class LoginController {
         User user = userService.findUserByUserName(auth.getName());
         List<ActiveMeal> activeMeals = activeMealService.findAll();
         List<LiveMeal> liveMealsList = liveMealService.findAll();
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Restaurants");
+        modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName());
+        modelAndView.addObject("adminMessage", "Restaurant System");
         modelAndView.addObject("activeMeals", activeMeals);
         modelAndView.addObject("liveMealsList", liveMealsList);
         modelAndView.setViewName("/restaurant/restaurant_home");
@@ -264,7 +264,7 @@ public class LoginController {
         User user = userService.findUserByUserName(auth.getName());
         List<ActiveMeal> activeMeals = activeMealService.findAll();
         List<LiveMeal> liveMealsList = liveMealService.findAll();
-        modelAndView.addObject("userName", "Welcome " + user.getUserName() + " | " + user.getFirstName() + " " + user.getLastName());
+        modelAndView.addObject("userName", "Welcome " +  user.getFirstName() + " " + user.getLastName());
         modelAndView.addObject("adminMessage", "");
         modelAndView.addObject("activeMeals", activeMeals);
         modelAndView.addObject("liveMeals", liveMeals);

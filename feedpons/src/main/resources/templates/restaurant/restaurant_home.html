@@ -32,48 +32,48 @@
             <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 
 
-<!--        <ul>-->
-<!--            <li th:each="activeMeal : ${activeMeals}" th:text="${activeMeal.itemName}"></li>-->
-<!--        </ul>-->
+            <!--        <ul>-->
+            <!--            <li th:each="activeMeal : ${activeMeals}" th:text="${activeMeal.itemName}"></li>-->
+            <!--        </ul>-->
 
-<!--            <form action="#" th:action="@{/restaurant/home}" method="post">-->
-<!--                <th:block th:each="activeMeal : ${activeMeals}">-->
-<!--                    <input type="checkbox" name="selectedActive" id="selectedActive" th:value="${activeMeal.itemName}"/>-->
-<!--                    <label th:text="${activeMeal.itemName}"></label>-->
-<!--                    <br/>-->
-<!--                </th:block>-->
-<!--                     <input type="submit" name="selectedActive" />-->
-<!--            </form>-->
+            <!--            <form action="#" th:action="@{/restaurant/home}" method="post">-->
+            <!--                <th:block th:each="activeMeal : ${activeMeals}">-->
+            <!--                    <input type="checkbox" name="selectedActive" id="selectedActive" th:value="${activeMeal.itemName}"/>-->
+            <!--                    <label th:text="${activeMeal.itemName}"></label>-->
+            <!--                    <br/>-->
+            <!--                </th:block>-->
+            <!--                     <input type="submit" name="selectedActive" />-->
+            <!--            </form>-->
 
 
-                <h4>Order Queue:</h4>
-                <form action="#" th:action="@{/restaurant/home}" method="post">
-                    <th:block th:each="activeMeal : ${activeMeals} ">
-                        <label for="selectedActive">
-                            <input type="checkbox" name="selectedActive" id="selectedActive"
-                                   th:value="${activeMeal.itemName}"
-                                   th:text="${activeMeal.itemName}"/>
-                        </label>
-                        <hr/>
-                    </th:block>
-
-                    <input type="radio" id="dinein" name="pickupType" value="Dine-In" required>
-                    <label for="dinein">Dine In</label><br>
-                    <input type="radio" id="pickup" name="pickupType" value="Pickup" required>
-                    <label for="pickUp">Pick Up</label><br>
-                    <input type="radio" id="delivery" name="pickupType" value="Delivery" required>
-                    <label for="delivery">Delivery</label>
-                    <br/>
+            <h4>Order Queue:</h4>
+            <form action="#" th:action="@{/restaurant/home}" method="post">
+                <th:block th:each="activeMeal : ${activeMeals} ">
+                    <label for="selectedActive">
+                        <input type="checkbox" name="selectedActive" id="selectedActive"
+                               th:value="${activeMeal.itemName}"
+                               th:text="${activeMeal.itemName}"/>
+                    </label>
                     <hr/>
+                </th:block>
+
+                <input type="radio" id="dinein" name="pickupType" value="Dine-In" required>
+                <label for="dinein">Dine In</label><br>
+                <input type="radio" id="pickup" name="pickupType" value="Pickup" required>
+                <label for="pickUp">Pick Up</label><br>
+                <input type="radio" id="delivery" name="pickupType" value="Delivery" required>
+                <label for="delivery">Delivery</label>
+                <br/>
+                <hr/>
 
 
-                    <label for="livetime">Food Go Live at:</label>
-                    <input type="datetime-local" id="livetime" name="livetime">
-                    <br/>
-                    <hr/>
+                <label for="livetime">Food Go Live at:</label>
+                <input type="datetime-local" id="livetime" name="livetime" value="">
+                <br/>
+                <hr/>
 
-                    <input class="btn btn-primary" type="submit" name="submitSelectedActive">
-                </form>
+                <input class="btn btn-primary" type="submit" name="submitSelectedActive">
+            </form>
 
 
             <br/>
@@ -82,12 +82,11 @@
 
 
             <h4>Live Order:</h4>
-            <ul>
-                <li th:each="liveMeals : ${liveMealsList}"
+            <ul >
+                <li class="p-3 mb-2 bg-info text-white" th:each="liveMeals : ${liveMealsList}"
                     th:text="${liveMeals.itemName} +
-                    '| Type: ' + ${liveMeals.pickupType} +
-                    '| Status: ' + ${liveMeals.status}"
-                    class="p-3 mb-2 bg-info text-white ">
+                    ' | Type: ' + ${liveMeals.pickupType} +
+                    ' | Status: ' + ${liveMeals.status}">
                 </li>
             </ul>
 
